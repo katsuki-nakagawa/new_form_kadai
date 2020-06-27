@@ -17,8 +17,8 @@ public class SystemConstants {
     /**
      * 正規表現
      */
-//    public static final String Regex001 ="^[\\x20-\\x7F]*$";
-    public static final String Regex001 = "^[a-zA-Z0-9!-/:-@¥[-`{-~]*$"; 	//半角英数記号
+    public static final String Regex001 ="^[\\x20-\\x7F]*$";	//半角英数記号
+//    public static final String Regex001 = "^[a-zA-Z0-9!-/:-@¥[-`{-~]*$"; 	//半角英数記号
     public static final String Regex002 = "^{1,20}[^ -~｡-ﾟ]+$";			//全角文字
     public static final String Regex003 = "^[0-9]*$";						//整数
 

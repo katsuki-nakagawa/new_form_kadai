@@ -39,6 +39,7 @@ public class UserDAO extends User{
     	sql = sb.toString();
     	return sql;
 	}
+
 	 /**
      * ユーザーテーブル取得
      * @param id
@@ -106,44 +107,40 @@ public class UserDAO extends User{
 
 
 
-	public boolean DuplicationCheck(HttpServletRequest request) {
-    	Connection conn = null;
-    	Statement stmt = null;
-    	ResultSet rs = null;
-    	int count = 1;
-    	try {
-    		// MySQLドライバをロード
-        	Class.forName("com.mysql.jdbc.Driver");
+	public boolean DuplicationCheck(HttpServletRequest request)throws SQLException {
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+//		int count = 1;
+		try {
+			// MySQLドライバをロード
+			Class.forName("com.mysql.jdbc.Driver");
 
-        	// MySQLデータベースに接続
-        	conn = DriverManager.getConnection(SystemConstants.DB_CON_STR);
+			// MySQLデータベースに接続
+			conn = DriverManager.getConnection(SystemConstants.DB_CON_STR);
 
-        	// ステートメントを作成
-        	stmt = conn.createStatement();
-        	// SQL発行
-        	rs = stmt.executeQuery(selectUserSql());
-
-
-
-
-
+			// ステートメントを作成
+			stmt = conn.createStatement();
+			// SQL発行
+			rs = stmt.executeQuery(selectUserSql());
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-		// ステートメントをクローズ
-		if (!stmt.isClosed()) {
-			stmt.close();
-		}
+			// ステートメントをクローズ
+			if (!stmt.isClosed()) {
+				stmt.close();
+			}
 
-		// 接続をクローズ
-		if (!conn.isClosed()) {
-			conn.close();
-		}
+			// 接続をクローズ
+			if (!conn.isClosed()) {
+				conn.close();
+			}
 
-		// 結果セットをクローズ
-		if (!rs.isClosed()) {
-			rs.close();
+			// 結果セットをクローズ
+			if (!rs.isClosed()) {
+				rs.close();
+			}
 		}
 		return false;
 

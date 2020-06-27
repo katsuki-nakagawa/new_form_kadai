@@ -52,6 +52,7 @@ public class Member extends HttpServlet {
 //		UserDAO dao = new UserDAO();
 
 		String proc = request.getParameter("proc");
+//		HttpSession session = request.getSession();
 
 		//ユーザー情報
 		User user =new User();
@@ -81,6 +82,7 @@ public class Member extends HttpServlet {
 		if (hasError) {
 			dispatch = request.getRequestDispatcher("./member.jsp");
 		} else {
+//			session.setAttribute("user", user);
 			dispatch = request.getRequestDispatcher("./confirm.jsp");
 		}
 		dispatch.forward(request, response);
