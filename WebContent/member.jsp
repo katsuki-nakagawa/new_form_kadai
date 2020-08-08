@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <title>Insert title here</title>
 
 <style>
@@ -17,8 +18,14 @@
 }
 
 </style>
-
+<%
+	String proc = request.getAttribute("proc").toString();
+%>
 <script>
+
+const MEMBER_REGISTRATION = "会員登録";
+const MEMBER_RENEWAL = "会員更新";
+const MEMBER_DELETION = "会員消去";
 
 	function seibetsuSelect() {
 		let hiddenBox = document.getElementById("hiddenBox");
@@ -31,6 +38,7 @@
 			hiddenBox.classList.add("hidden");
 		}
 	}
+
 	window.onload = function() {
 		var select = document.getElementById("changeSelect");
 		var value = document.getElementById("sexBox").value;
@@ -43,29 +51,38 @@
 			hyoji();
 		}
 
-		var proc = document.getElementById("proc").value;
-		if (proc == "update") {
-			document.getElementById("h1").textContent = '会員更新';
-		} else if (proc == "delete") {
-			document.getElementById("h1").textContent = '会員削除';
-			document.getElementById("id").readOnly = true;
-			document.getElementById("pass").readOnly = true;
-			document.getElementById("name").readOnly = true;
-			document.getElementById("age").readOnly = true;
-			document.getElementById("changeSelect").readOnly = true;
-			document.getElementById("hiddenBox").readOnly = true;
-		}
+		let title = document.getElementById("title");
+		let tabTitle =  document.getElementById("tabTitle");
 
+
+
+		if ("<%=proc%>" == "new") {
+			document.title = MEMBER_REGISTRATION;
+			title.innerHTML = MEMBER_REGISTRATION;
+		} else if ("<%=proc%>" == "update") {
+			document.title = MEMBER_RENEWAL;
+			title.innerHTML = MEMBER_RENEWAL
+		}else if ("<%=proc%>" == "delete"){
+			document.title = MEMBER_DELETION;
+			title.innerHTML = MEMBER_DELETION
+
+ 			document.getElementById("id").readOnly = true;
+ 			document.getElementById("pass").readOnly = true;
+ 			document.getElementById("name").readOnly = true;
+ 			document.getElementById("age").readOnly = true;
+ 			document.getElementById("changeSelect").readOnly = true;
+ 			document.getElementById("hiddenBox").readOnly = true;
+		}
 	}
 </script>
 
 </head>
 <body>
-<h1>会員登録</h1>
+<h1 id="title"></h1>
 <form method="post" action="./Member">
 		<input type="hidden" id="sexBox" value="<c:out value="${user.seibetu}" default="" />">
 		<input type="hidden" id="proc" name="proc" value="<c:out value="${proc}" default="" />">
-		<input type="hidden" name="userId" value="<c:out value="${user.idUser}" default="" />">
+		<input type="hidden" name="userid" value="<c:out value="${user.idUser}" default="" />">
 <table>
 	<tr>
 		<th>ログインユーザーID</th>

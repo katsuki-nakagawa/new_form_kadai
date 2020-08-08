@@ -34,8 +34,8 @@ public class Menu extends HttpServlet {
 		request.setCharacterEncoding("UTF8");
 		RequestDispatcher dispatch;
 
-		String mode = request.getParameter("proc");
-		if(mode.equals("new")) {
+//		String mode = request.getParameter("proc");
+		if(request.getParameter("proc") != null) {
 			request.setAttribute("proc", "new");
 			dispatch = request.getRequestDispatcher("./member.jsp");
 		}else {

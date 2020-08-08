@@ -54,6 +54,7 @@ public class Login extends HttpServlet {
 		String id = request.getParameter("id");
 		String pass = request.getParameter("pass");
 
+
 		//インスタンス
 		HttpSession session = request.getSession();
 	    User user = new User();

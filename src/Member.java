@@ -39,8 +39,21 @@ public class Member extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+//		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.setCharacterEncoding("UTF8");
+
+		String proc = request.getParameter("proc");
+		String id = request.getParameter("id");
+
+		if ("update".equals(proc) || "delete".equals(proc)) {
+			User user = this.fetchUser(id);
+			request.setAttribute("proc", proc);
+			request.setAttribute("user", user);
+		}
+		RequestDispatcher dispatch = request.getRequestDispatcher("./member.jsp");
+		dispatch.forward(request, response);
 	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -71,20 +84,35 @@ public class Member extends HttpServlet {
 		boolean hasError = false;
 		RequestDispatcher dispatch = request.getRequestDispatcher("./member.jsp");
 
-
 		//正規表現のステータス取得
 		hasError = this.Validate(request, user);
 
-		if ("new".equals(proc)) {
-			hasError = this.DuplicationCheck(request);
+		if ("delete".equals(proc)) {
+			// 削除
+			if (deleteUser(user)) {
+				// 削除処理に問題有り
+				dispatch = request.getRequestDispatcher("./member.jsp");
+			} else {
+				// 削除処理に問題無し
+				request.setAttribute("result", "削除しました。");
+				dispatch = request.getRequestDispatcher("./complete.jsp");
+			}
+		} else {
+
+			if ("new".equals(proc)) {
+				hasError = this.DuplicationCheck(request);
+			} else if ("update".equals(proc)) {
+				hasError = this.IDduplicationCheck(request, Integer.parseInt(user.getIdUser()));
+			}
+
+			if (hasError) {
+				dispatch = request.getRequestDispatcher("./member.jsp");
+			} else {
+				//			session.setAttribute("user", user);
+				dispatch = request.getRequestDispatcher("./confirm.jsp");
+			}
 		}
 
-		if (hasError) {
-			dispatch = request.getRequestDispatcher("./member.jsp");
-		} else {
-//			session.setAttribute("user", user);
-			dispatch = request.getRequestDispatcher("./confirm.jsp");
-		}
 		dispatch.forward(request, response);
 
 	}
@@ -232,4 +260,206 @@ public class Member extends HttpServlet {
 		return hasError;
 	}
 
+
+
+	// データベースからuserデータを取得し、userクラスに格納して返す。
+	public User fetchUser(String id_user) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		try {
+			// MySQLドライバをロード
+			Class.forName("com.mysql.jdbc.Driver");
+
+			// データベースに接続
+			conn = DriverManager.getConnection(SystemConstants.DB_CON_STR);
+
+			// クエリ生成
+			StringBuilder sb = new StringBuilder();
+			sb.append("SELECT ");
+			sb.append("id_login_user");
+			sb.append(", password");
+			sb.append(", mei_user");
+			sb.append(", seibetu");
+			sb.append(", seibetu_custom");
+			sb.append(", age ");
+			sb.append("FROM m_user ");
+			sb.append("WHERE ");
+			sb.append("id_user = ?;");
+
+			String sql = sb.toString();
+
+			pstmt = conn.prepareStatement(sql);
+			// バインドパラメータをセット
+			pstmt.setInt(1, Integer.parseInt(id_user));
+
+			// SQL発行
+			rset = pstmt.executeQuery();
+
+			rset.next();
+
+			// userクラスに格納
+			User user = new User();
+			user.setIdLoginUser(rset.getString(1));
+			user.setPassword(rset.getString(2));
+			user.setMeiUser(rset.getString(3));
+			user.setAge(rset.getString(6));
+			if (rset.getString(4) == null) {
+				user.setSeibetu("カスタム");
+			} else {
+				user.setSeibetu(rset.getString(4));
+			}
+			user.setCustom(rset.getString(5));
+			user.setIdUser(id_user);
+
+			return user;
+
+		} catch (Exception e) {
+			// エラーが出た場合nullを返す
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				// 結果セットをクローズ
+				if (!rset.isClosed()) {
+					rset.close();
+				}
+
+				// ステートメントをクローズ
+				if (!pstmt.isClosed()) {
+					pstmt.close();
+				}
+
+				// 接続をクローズ
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+	private boolean IDduplicationCheck(HttpServletRequest request, int id_user) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int count = 1;
+		String id = request.getParameter("id");
+		if (!id.isEmpty()) {
+			try {
+				// MySQLドライバをロード
+				Class.forName("com.mysql.jdbc.Driver");
+
+				// データベースに接続
+				conn = DriverManager.getConnection(SystemConstants.DB_CON_STR);
+
+				// クエリ生成
+				StringBuilder sb = new StringBuilder();
+				sb.append("SELECT COUNT(*) ");
+				sb.append("FROM m_user ");
+				sb.append("WHERE ");
+				sb.append("id_user NOT IN (?)");
+				sb.append("AND id_login_user = ?;");
+
+				String sql = sb.toString();
+
+				pstmt = conn.prepareStatement(sql);
+				// バインドパラメータをセット
+				pstmt.setInt(1, id_user);
+				pstmt.setString(2, id);
+
+				// SQL発行
+				rset = pstmt.executeQuery();
+
+				rset.next();
+
+				count = rset.getInt(1);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					// 結果セットをクローズ
+					if (!rset.isClosed()) {
+						rset.close();
+					}
+
+					// ステートメントをクローズ
+					if (!pstmt.isClosed()) {
+						pstmt.close();
+					}
+
+					// 接続をクローズ
+					if (!conn.isClosed()) {
+						conn.close();
+					}
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+			if (count > 0) {
+				request.setAttribute("ErrorID", "エラー");
+				return true;
+			}
+		} else {
+			return true;
+		}
+		return false;
+	}
+
+
+
+	//ユーザーを消去
+	public boolean deleteUser(User user) {
+		// 削除処理
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			// MySQLドライバをロード
+			Class.forName("com.mysql.jdbc.Driver");
+
+			// データベースに接続
+			conn = DriverManager.getConnection(SystemConstants.DB_CON_STR);
+
+			// クエリ生成
+			StringBuilder sb = new StringBuilder();
+			sb.append("DELETE FROM m_user ");
+			sb.append("WHERE id_user = ?;");
+			String sql = sb.toString();
+
+			pstmt = conn.prepareStatement(sql);
+
+			// バインドパラメータをセット
+			pstmt.setInt(1, Integer.parseInt(user.getIdUser()));
+
+			// SQL発行
+			pstmt.executeUpdate();
+
+			return false;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return true;
+		} finally {
+			try {
+
+				// ステートメントをクローズ
+				if (!pstmt.isClosed()) {
+					pstmt.close();
+				}
+
+				// 接続をクローズ
+				if (!conn.isClosed()) {
+					conn.close();
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+
 }
+
+

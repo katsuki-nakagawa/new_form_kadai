@@ -29,12 +29,17 @@
 			<td>${list.getMeiUser()}</td>
 			<td>${list.getAge()}</td>
 			<td>${list.getSeibetu()}</td>
+	    	<td>
+	    	<c:choose>
+	    		<c:when test="${list.getSeibetu() == 0}">男</c:when>
+	    		<c:when test="${list.getSeibetu() == 1}">女</c:when>
+	    		<c:otherwise>${list.getCustom()}</c:otherwise>
+	    	</c:choose>
 			<td>
 	  		<input type="button" value="更新" onclick="upDelUser('update', ${list.getIdUser()});">
 	  		<input type="button" value="削除" onclick="upDelUser('delete', ${list.getIdUser()});">
 			</td>
 	    </tr>
-
 	</c:forEach>
 </table>
 </body>
