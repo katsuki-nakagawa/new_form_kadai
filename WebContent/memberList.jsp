@@ -28,7 +28,6 @@
 			<td>${list.getIdLoginUser()}</td>
 			<td>${list.getMeiUser()}</td>
 			<td>${list.getAge()}</td>
-			<td>${list.getSeibetu()}</td>
 	    	<td>
 	    	<c:choose>
 	    		<c:when test="${list.getSeibetu() == 0}">男</c:when>

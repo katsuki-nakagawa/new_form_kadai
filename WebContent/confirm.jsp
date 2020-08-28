@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="entity.User"%>
+<%@ page import="entity.UserEntity"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -17,7 +17,7 @@
 
 
 <%
-	User user = (User) request.getAttribute("user");
+	UserEntity user = (UserEntity) request.getAttribute("user");
 
 	String displaySex = "";
 	if(user.getSeibetu().equals("0")){

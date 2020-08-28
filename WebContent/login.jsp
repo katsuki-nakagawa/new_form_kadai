@@ -16,13 +16,15 @@
 </head>
 <body>
     <p><%=res%></p>
-	<form method="post" action="./Login">
+	<form method="post" action="./Login?exec=login">
+
 		<div>
 			<div>ユーザーID：<input type="text" name="id" value="" /></div>
 			<div>パスワード：<input type="password" name="pass" value="" /></div>
 			<input type="submit" value="ログイン" />
 		</div>
 	</form>
-	<p><c:out value="${error_msg}" default="" /><p>
+	<p><c:out value="${errmsg}" default="" /><p>
+		<p style="color:red;">${ errmsg }</p>
 </body>
 </html>
