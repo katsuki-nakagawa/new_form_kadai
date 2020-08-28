@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 
 import constants.SystemConstants;
-import entity.User;
+import entity.UserEntity;
 
 
 /**
@@ -46,7 +46,7 @@ public class Member extends HttpServlet {
 		String id = request.getParameter("id");
 
 		if ("update".equals(proc) || "delete".equals(proc)) {
-			User user = this.fetchUser(id);
+			UserEntity user = this.fetchUser(id);
 			request.setAttribute("proc", proc);
 			request.setAttribute("user", user);
 		}
@@ -68,7 +68,7 @@ public class Member extends HttpServlet {
 //		HttpSession session = request.getSession();
 
 		//ユーザー情報
-		User user =new User();
+		UserEntity user =new UserEntity();
 		user.setIdUser(request.getParameter("userid"));			//ID
 		user.setIdLoginUser(request.getParameter("id"));		//ログインID
 		user.setPassword(request.getParameter("pass"));			//パスワード
@@ -195,7 +195,7 @@ public class Member extends HttpServlet {
 	 * @param user
 	 * @return
 	 */
-	public boolean Validate(HttpServletRequest request,User user) {
+	public boolean Validate(HttpServletRequest request,UserEntity user) {
 		boolean hasError= false;
 
 		//ID入力チェック
@@ -263,7 +263,7 @@ public class Member extends HttpServlet {
 
 
 	// データベースからuserデータを取得し、userクラスに格納して返す。
-	public User fetchUser(String id_user) {
+	public UserEntity fetchUser(String id_user) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -300,7 +300,7 @@ public class Member extends HttpServlet {
 			rset.next();
 
 			// userクラスに格納
-			User user = new User();
+			UserEntity user = new UserEntity();
 			user.setIdLoginUser(rset.getString(1));
 			user.setPassword(rset.getString(2));
 			user.setMeiUser(rset.getString(3));
@@ -411,7 +411,7 @@ public class Member extends HttpServlet {
 
 
 	//ユーザーを消去
-	public boolean deleteUser(User user) {
+	public boolean deleteUser(UserEntity user) {
 		// 削除処理
 		Connection conn = null;
 		PreparedStatement pstmt = null;

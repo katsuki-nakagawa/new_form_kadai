@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import entity.User;
 import entity.UserDAO;
+import entity.UserEntity;
 
 /**
  * Servlet implementation class MemberList
@@ -45,7 +45,7 @@ public class MemberList extends HttpServlet {
 			// 会員検索画面
             RequestDispatcher dispatch;
 
-			List<User> userList = new ArrayList<User>();
+			List<UserEntity> userList = new ArrayList<UserEntity>();
 			UserDAO dao = new UserDAO();
 			// ユーザ情報を取得
 			userList = dao.selectUser();

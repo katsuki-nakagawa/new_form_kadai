@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import entity.User;
+import entity.UserEntity;
 
 /**
  * Servlet implementation class HelloSession
@@ -36,7 +36,7 @@ public class HelloSession extends HttpServlet {
 		// セッションパラメータを書き込み
 		session.setAttribute("meiUser", "ほげ");
 
-		User user = new User();
+		UserEntity user = new UserEntity();
 		user.setMeiUser("しまだ");
 		// セッションパラメータを書き込み
 		session.setAttribute("userInfo", user);

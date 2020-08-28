@@ -12,9 +12,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import constants.SystemConstants;
+import entity.UserEntity;
 
 
-public class UserDAO extends User{
+public class UserDAO extends UserEntity{
 
 	/**
 	 *  ユーザーテーブルを取得するSQL
@@ -47,12 +48,12 @@ public class UserDAO extends User{
 	 * @throws SQLException
      * @throws Exception
      */
-    public List<User> selectUser() throws Exception  {
+    public List<UserEntity> selectUser() throws Exception  {
 
     	Connection conn = null;
     	Statement stmt = null;
     	ResultSet rs = null;
-    	List<User> userList = new ArrayList<User>();
+    	List<UserEntity> userList = new ArrayList<UserEntity>();
 
     	try {
     		// MySQLドライバをロード
@@ -68,7 +69,7 @@ public class UserDAO extends User{
 
         	// 取得レコード数分、処理を繰り返しユーザー情報を設定する
         	while (rs.next()) {
-        	    User user = new User();
+        		UserEntity user = new UserEntity();
         	    user.setIdUser(rs.getString("ID_USER"));
         	    user.setIdLoginUser(rs.getString("ID_LOGIN_USER"));
         	    user.setPassword(rs.getString("PASSWORD"));

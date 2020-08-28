@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import constants.SystemConstants;
-import entity.User;
+import entity.UserEntity;
 
 
 /**
@@ -45,7 +45,7 @@ public class Confirm extends HttpServlet {
         request.setCharacterEncoding("UTF8");
 
 		//ユーザー情報
-		User user =new User();
+		UserEntity user =new UserEntity();
 		user.setIdUser(request.getParameter("userId"));			//ID
 		user.setIdLoginUser(request.getParameter("id"));		//ログインID
 		user.setPassword(request.getParameter("pass"));			//パスワード
@@ -90,7 +90,7 @@ public class Confirm extends HttpServlet {
 	}
 
 	//inset
-	public boolean insertUser(User user) {
+	public boolean insertUser(UserEntity user) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
@@ -164,7 +164,7 @@ public class Confirm extends HttpServlet {
 
 
 	//update
-	public boolean updateUser(User user) {
+	public boolean updateUser(UserEntity user) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
