@@ -65,7 +65,10 @@ public class Confirm extends HttpServlet {
 
 		RequestDispatcher dispatch = request.getRequestDispatcher("./complete.jsp");
 
-		if ("new".equals(proc)) {
+		if ("戻る".equals(back)) {
+			dispatch = request.getRequestDispatcher("./member.jsp");
+		}
+		else if ("new".equals(proc)) {
 
 			if (insertUser(user)) {
 				dispatch = request.getRequestDispatcher("./member.jsp");
@@ -81,9 +84,6 @@ public class Confirm extends HttpServlet {
 				request.setAttribute("result", "更新しました。");
 			}
 
-		} else if ("戻る".equals(back)) {
-
-			dispatch = request.getRequestDispatcher("./member.jsp");
 		}
 		dispatch.forward(request, response);
 
