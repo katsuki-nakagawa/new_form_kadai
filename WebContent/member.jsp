@@ -17,6 +17,8 @@
 	visibility: visible;
 }
 
+.characterColor { color: #ff0000; }
+
 </style>
 <%
 	String proc = request.getAttribute("proc").toString();
@@ -87,22 +89,22 @@ const MEMBER_DELETION = "会員消去";
 	<tr>
 		<th>ログインユーザーID</th>
 		<td><input type="text" id="id" name="id" value="<c:out value="${user.idLoginUser}" default="" />"></td>
-		<td><span><c:out value="${ERROR_MSG_ID}" default="" /></span></td>
+		<td><span class="characterColor"><c:out value="${ERROR_MSG_ID}" default="" /></span></td>
 	</tr>
 	<tr>
 		<th>パスワード</th>
 		<td><input type="text" id="pass" name="pass" value="<c:out value="${user.password}" default="" />"></td>
-		<td><span><c:out value="${ERROR_MSG_PASS}" default="" /></span></td>
+		<td><span class="characterColor"><c:out value="${ERROR_MSG_PASS}" default="" /></span></td>
 	</tr>
 	<tr>
 		<th>ユーザー名</th>
 		<td><input type="text" id="name" name="name" value="<c:out value="${user.meiUser}" default="" />"></td>
-		<td><span><c:out value="${ERROR_MSG_NAME}" default="" /></span></td>
+		<td><span class="characterColor"><c:out value="${ERROR_MSG_NAME}" default="" /></span></td>
 	</tr>
 	<tr>
 		<th>年齢</th>
 		<td><input type="text" id="age" name="age" value="<c:out value="${user.age}" default="" />"></td>
-		<td><span><c:out value="${ERROR_MSG_AGE}" default="" /></span></td>
+		<td><span class="characterColor"><c:out value="${ERROR_MSG_AGE}" default="" /></span></td>
 	</tr>
 	<tr>
 		<th>性別</th>
@@ -117,7 +119,7 @@ const MEMBER_DELETION = "会員消去";
 		<td></td>
 		<td><input type="text" class="hidden" id=hiddenBox name="seibetsuText"
 							class="hidden" value="<c:out value="${user.custom}" default="" />"></td>
-				<td><span><c:out value="${ERROR_MSG_CUSTOM}" default="" /></span></td>
+				<td><span class="characterColor"><c:out value="${ERROR_MSG_CUSTOM}" default="" /></span></td>
 	</tr>
 	<tr>
 		<td></td>

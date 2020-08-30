@@ -14,6 +14,11 @@
 
  }
 </script>
+<style>
+td {
+	padding-left: 10px;
+}
+</style>
 
 
 <%
@@ -32,16 +37,16 @@
 	<form method="post" action="./Confirm">
 		<table>
 			<tr>
-				<th>氏名</th>
-				<th><c:out value="${user.idLoginUser}" /></th>
+				<th>氏名:</th>
+				<td><c:out value="${user.idLoginUser}" /></td>
 			</tr>
 			<tr>
-				<th>年齢</th>
-				<th><c:out value="${user.age}"  /></th>
+				<th>年齢:</th>
+				<td><c:out value="${user.age}"  /></td>
 			</tr>
 			<tr>
-				<th>性別</th>
-				<th><%=displaySex %></th>
+				<th>性別:</th>
+				<td><%=displaySex %></td>
 			</tr>
 		</table>
   				<input type="hidden" id="proc"  name="proc" value="<c:out value="${proc}" default="" />">

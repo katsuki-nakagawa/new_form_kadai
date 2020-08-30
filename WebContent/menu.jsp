@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>会員メニュー</title>
+
 <%
 	UserEntity user = (UserEntity) request.getAttribute("user");
 %>
@@ -14,7 +15,7 @@
 <body>
 	<p>会員メニュー</p>
 	<div>
-		ようこそ${sessionScope.loginUser.idLoginUser}様
+		ようこそ${sessionScope.userinfo.meiUser}様
 	</div>
 	<form method="get" name="insert" action="./Menu" target="_new">
 		<div>

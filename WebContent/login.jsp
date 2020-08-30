@@ -25,6 +25,5 @@
 		</div>
 	</form>
 	<p><c:out value="${errmsg}" default="" /><p>
-		<p style="color:red;">${ errmsg }</p>
 </body>
 </html>
