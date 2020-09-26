@@ -24,6 +24,6 @@
 			<input type="submit" value="ログイン" />
 		</div>
 	</form>
-	<p><c:out value="${errmsg}" default="" /><p>
+	<p style="color: #ff0000"><c:out value="${errmsg}" default="" /><p>
 </body>
 </html>

@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -198,6 +200,8 @@ public class Member extends HttpServlet {
 	public boolean Validate(HttpServletRequest request,UserEntity user) {
 		boolean hasError= false;
 
+
+
 		//ID入力チェック
 		if (StringUtils.isBlank(user.getIdLoginUser())) { //空白チェック
 			request.setAttribute("ERROR_MSG_ID", SystemConstants.Error_msgEMPTY);
@@ -236,16 +240,23 @@ public class Member extends HttpServlet {
 
 
 		//年齢チェック
+		Pattern p = Pattern.compile("^0+([0-9]+.*)");
+		Matcher m = p.matcher(user.getAge());
+
 		if (StringUtils.isBlank(user.getAge())) {
 			request.setAttribute("ERROR_MSG_AGE", SystemConstants.Error_msgEMPTY);
 			hasError = true;
 		} else if (!user.getAge().matches(SystemConstants.Regex003)) {
 			request.setAttribute("ERROR_MSG_AGE", SystemConstants.Error_msgSEISU);
 			hasError = true;
+		} else if (m.matches()) {
+			request.setAttribute("ERROR_MSG_AGE", SystemConstants.Error_msgZERO_SUPP);
+			hasError = true;
 		} else if (user.getAge().getBytes().length > 3) {
 			request.setAttribute("ERROR_MSG_AGE", SystemConstants.Error_msgMOJISU);
 			hasError = true;
 		}
+
 
 		//性別（カスタム）チェック
 		if (user.getSeibetu().isEmpty()) {

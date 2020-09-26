@@ -12,6 +12,7 @@ public class SystemConstants {
     public static final String Error_msgSEISU 		 = "整数で入力してください。";
     public static final String Error_msgMOJISU		 = "文字数制限を超えています。";
     public static final String Error_msgID		 	 = "このIDはすでに使われています";
+    public static final String Error_msgZERO_SUPP    = "先頭に0を含めることはできません。";
 
 
     /**
@@ -21,5 +22,6 @@ public class SystemConstants {
 //    public static final String Regex001 = "^[a-zA-Z0-9!-/:-@¥[-`{-~]*$"; 	//半角英数記号
     public static final String Regex002 = "^{1,20}[^ -~｡-ﾟ]+$";			//全角文字
     public static final String Regex003 = "^[0-9]*$";						//整数
+    public static final String Regex004 = "^0+([0-9]+.*)";
 
 }
