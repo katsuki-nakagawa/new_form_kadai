@@ -59,6 +59,8 @@
 				$("#input_seibetus").hide();
 			}
 		});
+
+		console.log(<c:out value="${user.idLoginUser}" default="" />);
 	});
 
 	const MEMBER_REGISTRATION = "会員登録";
@@ -66,17 +68,22 @@
 	const MEMBER_DELETION = "会員消去";
 
 	window.onload = function() {
-		var select = document.getElementById("changeSelect");
+/* 		var select = document.getElementById("changeSelect");
 		var value = document.getElementById("sexBox").value;
 		if (value == "0") {
-			select.options[1].selected = true;
+			select.options[0].selected = true;
 		} else if (value == "1") {
-			select.options[2].selected = true;
+			select.options[1].selected = true;
 		} else if (value == "2") {
-			select.options[3].selected = true;
+			select.options[2].selected = true;
 			$("#input_seibetus").show();
 
-		}
+		} */
+
+	/* 	cosnt seibetsu = $('#changeSelect').val(); */
+ 		if($('#changeSelect').val() == "2") {
+ 			$("#input_seibetus").show();
+ 		}
 
 		let title = document.getElementById("title");
 		let tabTitle = document.getElementById("tabTitle");
@@ -119,7 +126,7 @@
 			</tr>
 			<tr>
 				<th>年齢</th>
-				<td><input type="text" id="age" name="age"
+				<td><input type="number" id="age" name="age"
 					value="<c:out value="${user.age}" default="" />"></td>
 				<td><span class="characterColor"><c:out
 							value="${ERROR_MSG_AGE}" default="" /></span></td>
@@ -127,9 +134,9 @@
 			<tr>
 				<th>性別</th>
 				<td><select name="seibetsu" id="changeSelect">
-						<option value="0">男性</option>
-						<option value="1">女性</option>
-						<option value="2">カスタム</option>
+						<option value="0" <c:if test="${user.seibetu == '0'}">selected </c:if>>男性</option>
+						<option value="1" <c:if test="${user.seibetu == '1'}">selected </c:if>>女性</option>
+						<option value="2" <c:if test="${user.seibetu == '2'}">selected </c:if>>カスタム</option>
 				</select></td>
 			</tr>
 			<tr id="input_seibetus">

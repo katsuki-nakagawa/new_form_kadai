@@ -84,6 +84,7 @@ public class Member extends HttpServlet {
 		request.setAttribute("proc", proc);
 
 		boolean hasError = false;
+		boolean hasDuplicationCheck = false ;
 		RequestDispatcher dispatch = request.getRequestDispatcher("./member.jsp");
 
 		//正規表現のステータス取得
@@ -102,12 +103,14 @@ public class Member extends HttpServlet {
 		} else {
 
 			if ("new".equals(proc)) {
-				hasError = this.DuplicationCheck(request);
+				/*hasError = this.DuplicationCheck(request);*/
+				hasDuplicationCheck = this.DuplicationCheck(request);
 			} else if ("update".equals(proc)) {
-				hasError = this.IDduplicationCheck(request, Integer.parseInt(user.getIdUser()));
+				/*hasError = this.IDduplicationCheck(request, Integer.parseInt(user.getIdUser()));*/
+				hasDuplicationCheck = this.IDduplicationCheck(request, Integer.parseInt(user.getIdUser()));
 			}
 
-			if (hasError) {
+			if (hasError && hasDuplicationCheck) {
 				dispatch = request.getRequestDispatcher("./member.jsp");
 			} else {
 				//			session.setAttribute("user", user);

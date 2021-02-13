@@ -38,7 +38,7 @@ td {
 		<table>
 			<tr>
 				<th>氏名:</th>
-				<td><c:out value="${user.idLoginUser}" /></td>
+				<td><c:out value="${user.meiUser}" /></td>
 			</tr>
 			<tr>
 				<th>年齢:</th>
